@@ -133,6 +133,10 @@ function cargarLogo3D(dataURL, clave, ajustar) {
     grupo.userData.altura3d = tamano.y;
     grupo.userData.es3d = true;
 
+    // Cada nodo hijo del modelo pasa a ser una pieza con vida propia: en DAALE
+    // eso es una letra, en Noche Magik el lockup entero.
+    for (const nodo of [...gltf.scene.children]) registrarPieza(nodo);
+
     scene.add(grupo);
     logos[clave] = grupo;
     layoutLogos();
@@ -478,54 +482,109 @@ function stepFireworks(dt) {
   colors.needsUpdate = true;
 }
 
-/* ---------- Giro al tocar los logos ---------- */
+/* ---------- Piezas que reaccionan al puntero ---------- */
 
-/* Al pasar el puntero, el logo arranca una vuelta entera sobre su eje vertical
-   y tarda 6 segundos en volver al punto de partida. La curva es exponencial:
-   sale rápido y se va frenando, que es de donde viene la sensación de inercia. */
-const GIRO_DURACION = 6000;
+/* Cada letra de DAALE y la luna son piezas independientes: se agrandan un 3% al
+   pasarles el puntero por encima y giran al hacerles clic.
+   Todo el movimiento sale de un resorte amortiguado en vez de una curva fija,
+   porque es lo que produce solo la inercia y el rebote: la pieza pasa de largo
+   el punto final y vuelve, como un objeto real con peso. */
+const ESCALA_HOVER = 1.03;
 const raycaster = new THREE.Raycaster();
-const giros = new Map();
+const piezas = [];
 
-function empezarGiro(logo) {
-  const actual = giros.get(logo);
-  if (actual && performance.now() - actual.desde < GIRO_DURACION * 0.92) return;
-  giros.set(logo, { desde: performance.now() });
+/* Un resorte con zeta menor a 1 sobrepasa el objetivo antes de asentarse.
+   omega marca qué tan rápido llega; zeta, cuánto rebota en el camino. */
+function pasoResorte(estado, objetivo, omega, zeta, dt) {
+  const aceleracion =
+    omega * omega * (objetivo - estado.valor) - 2 * zeta * omega * estado.vel;
+  estado.vel += aceleracion * dt;
+  estado.valor += estado.vel * dt;
 }
 
-function pasoGiros(ahora) {
-  for (const [logo, giro] of giros) {
-    const t = (ahora - giro.desde) / GIRO_DURACION;
-    if (t >= 1) {
-      logo.rotation.y = 0;
-      giros.delete(logo);
-      continue;
-    }
-    // easeOutExpo sobre una vuelta completa: termina donde empezó.
-    const suave = t === 1 ? 1 : 1 - Math.pow(2, -9 * t);
-    logo.rotation.y = suave * Math.PI * 2;
+/* La pieza se envuelve en un pivote ubicado en su centro para que la escala y
+   el giro ocurran sobre ella misma y no alrededor del origen del logo.
+   Se registra el nodo completo y no cada malla: una letra con borde de color y
+   relleno blanco llega como dos primitivas, y moverlas por separado la partiría
+   al medio. */
+function registrarPieza(objeto) {
+  const padre = objeto.parent;
+  objeto.updateWorldMatrix(true, true);
+  const centro = new THREE.Box3().setFromObject(objeto).getCenter(new THREE.Vector3());
+  padre.worldToLocal(centro);
+
+  const pivote = new THREE.Group();
+  pivote.position.copy(centro);
+  padre.add(pivote);
+
+  objeto.position.sub(centro);
+  pivote.add(objeto);
+
+  piezas.push({
+    objeto,
+    pivote,
+    encima: false,
+    escala: { valor: 1, vel: 0 },
+    giro: { valor: 0, vel: 0, objetivo: 0 },
+  });
+}
+
+function piezaDe(objeto) {
+  for (let o = objeto; o; o = o.parent) {
+    const pieza = piezas.find((p) => p.objeto === o);
+    if (pieza) return pieza;
   }
+  return null;
 }
 
 const ndcPuntero = new THREE.Vector2();
-const cajaLogo = new THREE.Box3();
 
-/* Se prueba contra la caja del logo y no contra su geometría: un logo tiene
-   huecos entre la luna y las letras, y pedirle puntería fina a alguien que
-   navega desde el celular es perder la interacción. */
-function revisarHover() {
-  if (!pointer.active) return;
+function piezaBajoPuntero() {
+  if (!pointer.active || !piezas.length) return null;
   ndcPuntero.set(
     (pointer.screen.x / innerWidth) * 2 - 1,
     -(pointer.screen.y / innerHeight) * 2 + 1
   );
   raycaster.setFromCamera(ndcPuntero, camera);
+  const impactos = raycaster.intersectObjects(
+    piezas.map((p) => p.objeto),
+    true
+  );
+  return impactos.length ? piezaDe(impactos[0].object) : null;
+}
 
-  for (const logo of [logos.daale, logos.noche]) {
-    if (!logo) continue;
-    cajaLogo.setFromObject(logo);
-    if (raycaster.ray.intersectsBox(cajaLogo)) empezarGiro(logo);
+function girarPieza(pieza) {
+  pieza.giro.objetivo += Math.PI * 2;
+  // El clic también empuja la escala, así que el rebote se siente en las dos.
+  pieza.escala.vel += 3.2;
+}
+
+function pasoPiezas(dt) {
+  const activa = reduceMotion ? null : piezaBajoPuntero();
+
+  for (const pieza of piezas) {
+    pieza.encima = pieza === activa;
+
+    pasoResorte(pieza.escala, pieza.encima ? ESCALA_HOVER : 1, 13, 0.45, dt);
+    pasoResorte(pieza.giro, pieza.giro.objetivo, 4.6, 0.32, dt);
+
+    // Una vez quieta, se descuentan las vueltas para que el ángulo no crezca
+    // sin límite en una sesión larga.
+    if (
+      Math.abs(pieza.giro.objetivo - pieza.giro.valor) < 0.002 &&
+      Math.abs(pieza.giro.vel) < 0.002 &&
+      pieza.giro.objetivo !== 0
+    ) {
+      const vueltas = Math.round(pieza.giro.objetivo / (Math.PI * 2));
+      pieza.giro.objetivo -= vueltas * Math.PI * 2;
+      pieza.giro.valor -= vueltas * Math.PI * 2;
+    }
+
+    pieza.pivote.scale.setScalar(pieza.escala.valor);
+    pieza.pivote.rotation.y = pieza.giro.valor;
   }
+
+  canvas.style.cursor = activa ? "pointer" : "";
 }
 
 /* ---------- Puntero ---------- */
@@ -558,6 +617,13 @@ function sideAt(clientX, clientY) {
 
 addEventListener("pointerdown", (e) => {
   if (e.target.closest("button, a")) return;
+
+  // El clic sobre una letra o sobre la luna la hace girar.
+  pointer.active = true;
+  pointer.screen.set(e.clientX, e.clientY);
+  const pieza = piezaBajoPuntero();
+  if (pieza) girarPieza(pieza);
+
   const w = screenToWorld(e.clientX, e.clientY);
   if (sideAt(e.clientX, e.clientY) === "daale") {
     burstConfetti(w.x, w.y, 90, 1.15);
@@ -926,8 +992,7 @@ function frame(now) {
 
   stepConfetti(dt);
   stepFireworks(dt);
-  revisarHover();
-  pasoGiros(now);
+  pasoPiezas(dt);
 
   // Parallax: la cámara acompaña la elección y cada capa se mueve distinto.
   pan += (panTarget - pan) * Math.min(1, dt * 5);
@@ -953,12 +1018,15 @@ function frame(now) {
 
 resize();
 
-// Bienvenida: la página estalla apenas entrás, de los dos lados a la vez.
-if (!reduceMotion) {
+/* Bienvenida: la página estalla apenas entrás, de los dos lados a la vez.
+   Se espera a tener un viewport con medidas: embebida en un iframe que todavía
+   no fue dimensionado, el estallido saldría con coordenadas NaN. */
+if (!reduceMotion && innerWidth > 0 && innerHeight > 0) {
   const b0 = bounds();
   const narrow0 = isNarrow();
   burstConfetti(narrow0 ? 0 : -b0.x * 0.5, narrow0 ? b0.y * 0.3 : -b0.y * 0.2, 150, 1.35);
   burstFirework(narrow0 ? 0 : b0.x * 0.5, narrow0 ? -b0.y * 0.35 : b0.y * 0.25, 200);
 }
+
 
 requestAnimationFrame(frame);

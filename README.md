@@ -16,7 +16,7 @@ Se abre en `http://localhost:5173`.
 ## Qué está hecho
 
 - **Hero partido**: DAALE de día a la izquierda, Noche Magik de noche a la derecha, con el degradado de decisión en el medio. Se arrastra la costura o se usan los botones para elegir marca.
-- **Los dos logos en 3D**, modelados, que giran sobre su eje al pasarles el puntero y vuelven al punto de partida en 6 segundos.
+- **Los dos logos en 3D**, modelados. Cada letra de DAALE y la luna reaccionan por separado: se agrandan un 3% al pasarles el puntero y giran al hacerles clic, volviendo a su lugar con inercia y un rebote corto.
 - **Confeti y fuegos artificiales** con física, que responden al mouse y estallan al hacer clic.
 - **Los tres planes** con su equipo visible, respetando la regla de un coordinador cada dos personajes.
 - **Ficha de contratación**: siete campos que arman el mensaje y lo mandan al WhatsApp que corresponde según el horario elegido.
