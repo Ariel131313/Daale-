@@ -1,0 +1,29 @@
+node_modules
+dist
+.DS_Store
+*.crdownload
+
+# Material fuente pesado del cliente (400 MB): los modelos ya optimizados que
+# el sitio realmente usa están versionados en src/
+lua 3d/
+RA/
+PACTO FINALE.wav
+
+# Interno del negocio: Precios incluye alias de cobro, instrucciones son audios
+Precios/
+instrucciones/
+
+# Originales de fotos y logos; las que usa el sitio están en public/ y src/
+FOTOS DAALE/
+FOTOS NOCHE MAGIC/
+triptico/
+LOGO*.jpeg
+LOGO*.PNG
+Logo*.jpeg
+*.pdf
+
+# Skills de terceros para Claude: se reinstalan, no se versionan
+.claude/skills/
+
+# Copia de los skills que hace impeccable
+.agents/
