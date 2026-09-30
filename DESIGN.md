@@ -1,72 +1,49 @@
-# DESIGN.md — DAALE!! / Noche Magik
+# DESIGN.md · Daale y Noche Magik
 
-## Estrategia de color
+Los tokens viven en `src/app/globals.css` y cada ruta los aplica con `data-brand`. Son una propuesta derivada de los logos, no un manual de marca oficial.
 
-**Full palette**, dividida en dos mundos que comparten una costura.
+## Colores
 
-Los colores no se eligieron: se leyeron del logo sticker de DAALE, del tríptico impreso y del logo de la luna de Noche Magik.
+Medidos sobre los archivos originales de los logos.
 
-### DAALE (mitad de día)
-
-| Rol | Valor | Uso |
+| Marca | Del logo | Uso en la interfaz |
 |---|---|---|
-| Papel | `oklch(99% 0.004 250)` | Fondo de la mitad izquierda |
-| Rojo | `#c62828` | Letra del logo, fichas de personaje |
-| Violeta | `#6a2c91` | Títulos de plan, fichas de coordinador |
-| Azul | `#1e7fc2` | Acción primaria, encabezados |
-| Oro | `#e8b93b` | Foco, marca de "estimado" |
-| Tinta | `#16283d` | Texto |
+| Daale | rojo `#EA3030`, violeta `#7E4296`, azul `#007EC0` | Fondo cálido `#FFFBF6`, lavanda `#F6F1FA`, texto `#221A2E`. Botón principal violeta oscuro `#6B2F86` (8,8:1 con blanco). Rojo y azul de texto oscurecidos a `#C42424` y `#0068A3` para pasar AA. |
+| Noche Magik | luna `#58A8D0`, nombre `#003870`, estrellas doradas | Fondo azul noche `#0B1630`, superficies `#14254A`, texto `#F4F7FC`. Botón principal azul lunar `#9BD0F0` con texto `#06142B` (11:1). Dorado `#F2C14E` para foco y selección; en el header claro el foco es azul noche `#0B1630`, porque el dorado sobre la luna no se ve (1,5:1). |
+| Portada | — | Neutral cálido `#FBF8F4` con un pasaje suave hacia el crepúsculo. |
 
-### Noche Magik (mitad de noche)
-
-| Rol | Valor | Uso |
-|---|---|---|
-| Negro | `#000000` | Fondo, pedido explícito del cliente |
-| Navy | `#0a1626` | Superficies elevadas |
-| Luna | `#6fa8d6` | Títulos, enlaces |
-| Oro | `#f5c25b` | Acento, bordes de botón |
-| Lavanda | `#9b9be0` | Chispas de fuegos artificiales |
-| Texto | `#e6edf7` | Cuerpo |
-
-### La costura
-
-`#7ec8f0` celeste en el centro exacto. Es la zona de decisión: de blanco a celeste a negro. No es decoración, es la interfaz para elegir marca.
+**Hallazgo clave:** el logo de Noche Magik es transparente y su nombre es azul `#003870`. Sobre la noche da 1,5:1 y no se lee. Por eso el header de Noche Magik es claro ("luz de luna", `#EAF2FA`) y el logo siempre se apoya en esa superficie. No se recolorea.
 
 ## Tipografía
 
-Dos familias que nunca conviven en el mismo mundo. Son las dos identidades, no dos estilos.
+- **Fredoka**: títulos de Daale y de la portada. Redondeada, del mismo lenguaje que las letras del logo.
+- **Young Serif**: títulos de Noche Magik. Serif blanda, compatible con el nombre del logo, más editorial.
+- **Atkinson Hyperlegible Next**: todo el texto funcional de las dos marcas. Diseñada para máxima legibilidad; pensada para quien lee desde el celular a cualquier edad.
 
-- **Fredoka** (500/600/700) — display de DAALE. Redonda e inflada, del mismo lenguaje que el logo sticker.
-- **Prata** (400) — display de Noche Magik. Serif de contraste alto, la letra del logo de la luna.
-- **Nunito** (400/600/700) — cuerpo y formulario en los dos mundos. Elegida por legibilidad a los 50 años en un celular.
+Cuerpo de 17px. Textos secundarios de 16px como mínimo, y campos nunca por debajo de 16px (evita el zoom de iOS). Solo las etiquetas cortas («Imagen ilustrativa», «Pendiente de confirmar») bajan a 14px.
 
-Escala con contraste ≥1.25. Cuerpo con piso de 16px en los inputs, para que iOS no haga zoom al enfocar.
+Young Serif tiene un único peso: el sitio desactiva la negrita sintética (`font-synthesis-weight: none`), así un `font-semibold` nunca la deforma.
 
-## Forma
+## Motivos
 
-- Radio de pastilla (`999px`) en botones y chips: es el sistema de Disney y el del logo.
-- Radio grande (1.1–2.5rem) en tarjetas y campos. Nada de esquinas duras.
-- Bordes de 2px visibles en vez de sombras blandas. La marca es de sticker, no de vidrio.
-- Sombras solo donde hay elevación real: botones y el flotante de WhatsApp.
+- **Daale: confeti** en rojo, violeta y azul.
+- **Noche Magik: estrellas** azules y doradas de cuatro puntas, como las del logo.
 
-## Movimiento
+Nunca juntos en un mismo elemento. Pocos, con opacidad moderada, sin tapar texto ni controles. Aparecen en tarjetas, separadores, progreso y confirmación del configurador.
 
-- Un solo momento orquestado: la bienvenida, cuando estallan confeti y fuegos de los dos lados a la vez.
-- El resto responde a la persona: click, arrastre, scroll, hover.
-- Parallax en la costura, con los logos a distinta profundidad.
-- Todo respeta `prefers-reduced-motion`.
+Sus colores se definen una sola vez, en `:root` de `globals.css`: `--confetti-red`, `--confetti-violet` y `--confetti-blue` para Daale; `--star-gold`, `--star-blue` y `--star-lavender` para Noche Magik. Cambiarlos ahí cambia todos los motivos.
 
-## Componentes
+## Accesibilidad
 
-- **Tripulación** (`.crew`): cada plan se ve como su equipo, con fichas de personaje y coordinador. Reemplaza la grilla de tarjetas iguales.
-- **Ficha de personaje** (`.personaje`): foto 4:3, nombre y una línea de dónde funciona mejor. Los que no van con la franja elegida bajan de opacidad pero siguen disponibles.
-- **Campo** (`.campo`): bloque blanco con radio grande, leyenda en Fredoka violeta.
-- **Opción** (`.opcion`): radio oculto y pastilla visible.
-- **Marca de estimado** (`.estimado`): pastilla ámbar sobre el precio no confirmado.
+Contraste AA o mejor en todo el texto, áreas táctiles de 44px, etiquetas siempre visibles, errores escritos junto al campo, foco visible, nada que dependa solo del color o del hover, movimiento reducido respetado.
 
-## Prohibiciones de este proyecto
+El WhatsApp flotante solo aparece en las landings, después del hero, y se esconde cuando llega a su zona una sección marcada con `data-sin-flotante`: preguntas frecuentes, cierre, pie y el botón de empresas. Esas secciones ya tienen su propio WhatsApp y el flotante taparía filas o botones de ancho completo. En el configurador no aparece.
 
-- Nada de `#000` ni `#fff` fuera de los dos fondos que el cliente pidió explícitamente (blanco de DAALE, negro de Noche Magik).
-- Nada de tarjetas anidadas.
-- Nada de gradientes como decoración: el único gradiente de la página es la costura, y es funcional.
-- El 3D nunca captura el puntero ni se pone delante del texto.
+## Logos: qué variante va dónde
+
+| Lugar | Archivo publicado | Original |
+|---|---|---|
+| Header y tarjetas de Daale | `public/brand/daale/daale-insta.webp` | `export/DAALE INSTA 02.png` |
+| Todo Noche Magik | `public/brand/noche-magik/noche-magik.webp` | `LOGO NOCHE MAGICA.PNG` |
+
+A las copias solo se les quitaron márgenes 100% transparentes y se las pasó a WebP; el dibujo no cambió. **Pendiente:** versión compacta y transparente del logo de Daale sin el usuario de Instagram, para el header y el favicon.

@@ -26,13 +26,20 @@ jobs:
           node-version: 22
           cache: npm
 
-      - run: npm ci
-      - run: npm run build
+      - id: pages
+        uses: actions/configure-pages@v5
 
-      - uses: actions/configure-pages@v5
+      - run: npm ci
+      - run: npm test
+
+      # Pages sirve el sitio bajo /<repo>: Next necesita saberlo al construir.
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: out
 
   publicar:
     needs: construir

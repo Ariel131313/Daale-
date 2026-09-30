@@ -1,45 +1,34 @@
-# PRODUCT.md — DAALE!! Animación y Deco / Noche Magik
+# PRODUCT.md · Daale y Noche Magik
 
 register: brand
 
+Fuente de verdad: `instrucciones/INSTRUCCIONES NOCHE + DAALE.txt` (brief maestro del 24/09/2026). Si algo de acá lo contradice, gana el brief.
+
 ## Qué es
 
-Dos marcas hermanas de San Juan, Argentina, que mandan personajes disfrazados y coordinadores a eventos.
+Dos marcas de San Juan, Argentina, con infraestructura compartida y todo lo demás separado (nombre, logo, copy, colores, catálogo, WhatsApp, analítica).
 
-- **DAALE!! Animación y Deco** — de día: cumpleaños infantiles, jardines, escuelas, efemérides, activaciones en shoppings y estaciones de servicio. También fabrican muñecos mascota y cotillón artesanal.
-- **Noche Magik** — de noche: bodas, quince, dieciocho, boliches, fiestas de empresa. Recepción, mimos, pierrot, zancudos, hombre espejo, noches de terror.
+- **Daale**: personajes, animación, decoración, intervenciones artísticas y experiencias para familias, celebraciones particulares, empresas, shoppings, cines, comercios y marcas. No es solo "animación infantil".
+- **Noche Magik**: shows y experiencias para eventos de noche: fiestas, casamientos, celebraciones de 15 y de 18, boliches y eventos de empresa. Algunas propuestas podrían ser exclusivas para mayores de 18; esas viven en un recorrido separado, apagado por defecto.
 
-El negocio se organiza por **franja horaria**, no por tipo de evento. Así está armado su propio tríptico impreso: Good Morning / Good Afternoon / Noche Magik.
+## Recorrido que busca el negocio
+
+Instagram, anuncio, Google o QR → landing → elección clara de marca → configurador breve → resumen → WhatsApp con una consulta ordenada → conversación humana y cotización. Sin cuenta, sin checkout, sin precios automáticos. Una consulta básica tiene que resolverse en uno o dos minutos.
+
+Lo que se mide: cuántos empiezan y terminan una configuración y cuántos tocan "Enviar por WhatsApp". Tocar ese botón **no** es un lead confirmado.
 
 ## Usuarios
 
-Mujeres de 35 a 55 años, mayormente madres, organizando el cumpleaños de un hijo desde el celular. Algunas no son hábiles con la tecnología. También entran chicos a mirar los personajes, y empresas buscando activaciones.
-
-Hoy todo se cotiza por DM de Instagram o WhatsApp, uno por uno. **La página existe para reemplazar ese ida y vuelta**: que el cliente arme su propio pedido y lo mande listo por WhatsApp.
-
-## Trabajo principal de la página
-
-Llevar a alguien de "¿cuánto sale?" a un pedido enviado por WhatsApp, sin intermediarios y sin esperar respuesta.
-
-## Tono
-
-Argentino rioplatense, voseo siempre ("elegí", "armá", "escribinos"). Cálido y directo, nunca ingenioso ni corporativo. Frases cortas. Cada dato tiene que entenderse de una sola lectura, porque la persona está decidiendo con el chico al lado.
+Personas de 40 o 50 años organizando un evento desde el celular, familias con chicos, responsables de marketing de shoppings y marcas. Tienen que saber en segundos dónde entrar y cómo pedir una propuesta.
 
 ## Principios
 
-1. **La hora define la marca.** Elegir "noche" no cambia un color: cambia de empresa. La transición entre DAALE y Noche Magik es el gesto central de la página.
-2. **El contacto directo nunca se esconde.** Si alguien se pierde, tiene que poder escribir por WhatsApp desde donde esté.
-3. **El 3D acompaña, nunca tapa.** Confeti, fuegos y logos van detrás del contenido, sin capturar el puntero, con menos carga en el celular.
-4. **La estructura enseña las reglas.** La regla de 1 coordinador cada 2 personajes se ve mientras elegís, no se lee en una letra chica.
-5. **Ningún precio inventado pasa por confirmado.** Lo estimado se marca como estimado, en pantalla y en el mensaje de WhatsApp.
+1. **La portada es neutral y family friendly.** Dos tarjetas claras con los logos reales. Nada de pantallas partidas en blanco y negro, ni elegir marca por hora, edad o supuestos.
+2. **Nocturno no es adulto.** Una fiesta de 15 es de Noche Magik y es un evento con menores. Lo exclusivo para mayores nunca se muestra, sugiere ni mezcla en recorridos familiares o con menores.
+3. **Los logos no se tocan.** Ni redibujar, ni recolorear, ni recortar el dibujo. El de Noche Magik tiene el nombre azul oscuro: siempre va sobre superficie clara.
+4. **Nada inventado.** Ni testimonios, ni clientes, ni precios, ni plazos, ni zonas. Lo no confirmado se marca como pendiente.
+5. **El contacto directo siempre a mano**, distinto de "Armá tu evento".
 
-## Anti-referencias
+## Tono
 
-- Minimalismo. El cliente lo pidió explícitamente: "poco minimalista". El rigor va en la estructura, la fiesta en la superficie.
-- La estética de SaaS: tarjetas iguales en grilla, sombras grises blandas, gradientes decorativos.
-- El infantilismo barato de las páginas de cotillón: Comic Sans, degradados arcoíris, clipart.
-- Lo genérico de agencia: fotos de stock, "soluciones integrales", texto que no dice nada.
-
-## Referencia declarada
-
-Disney World (es-AR) para el sistema de botones tipo pastilla, las esquinas redondeadas generosas y la calidez, pero con el lado de Noche Magik sobre negro. El cliente pidió "calidad suiza, no caer en la simpleza" y "un cómic, pero también 3D".
+Español argentino profesional y cálido, con voseo natural. Frases cortas y concretas. Sin lenguaje inclusivo ni jerga de marketing.

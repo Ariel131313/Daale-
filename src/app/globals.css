@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+/*
+ * Tokens por marca. Los componentes usan siempre los nombres semánticos
+ * (bg, surface, ink, primary...) y cada tema los redefine con data-brand.
+ *
+ * Colores derivados de los logos (propuesta, no manual oficial):
+ *   Daale: rojo #EA3030, violeta #7E4296, azul #007EC0.
+ *   Noche Magik: luna #58A8D0, azul del nombre #003870, estrellas doradas.
+ * Los tonos de texto y botones son versiones más oscuras o más claras de esos
+ * colores para llegar a contraste AA; los originales quedan para decoración.
+ */
+
+/*
+ * Colores de los motivos, en un solo lugar: confeti de Daale (los tres del
+ * logo) y estrellas de Noche Magik (dorado, azul lunar y lavanda). Los usan
+ * los SVG de los motivos y las clases bg-brand-* / text-nm-*.
+ */
+:root {
+  --confetti-red: #ea3030;
+  --confetti-violet: #7e4296;
+  --confetti-blue: #007ec0;
+  --star-gold: #f2c14e;
+  --star-blue: #9bd0f0;
+  --star-lavender: #a99be0;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-field-border: var(--field-border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --color-selected: var(--selected);
+  --color-selected-bg: var(--selected-bg);
+  --color-focus: var(--focus);
+  --color-error: var(--error);
+  --color-moon: var(--moon);
+  --color-brand-red: var(--confetti-red);
+  --color-brand-violet: var(--confetti-violet);
+  --color-brand-blue: var(--confetti-blue);
+  --color-nm-moon: #58a8d0;
+  --color-nm-navy: #003870;
+  --color-nm-gold: var(--star-gold);
+  --color-nm-starlight: var(--star-blue);
+  --color-nm-lavender: var(--star-lavender);
+
+  --font-display: var(--font-display-family);
+  --font-sans: var(--font-body);
+
+  --radius-card: 1.25rem;
+  --radius-field: 0.75rem;
+}
+
+/* Portada neutral: luz cálida de Daale que se vuelve crepúsculo. */
+:root,
+[data-brand="root"] {
+  --bg: #fbf8f4;
+  --bg-soft: #f3eef7;
+  --surface: #ffffff;
+  --surface-2: #f7f3fa;
+  --ink: #1f1a2b;
+  --ink-muted: #564d63;
+  --line: #e4dcea;
+  --field-border: #857a94;
+  --primary: #3a2d5c;
+  --primary-hover: #2c2248;
+  --on-primary: #ffffff;
+  --accent-1: #c42424;
+  --accent-2: #7e4296;
+  --accent-3: #0068a3;
+  --selected: #3a2d5c;
+  --selected-bg: #f1ecf7;
+  --focus: #0068a3;
+  --error: #b3261e;
+  --moon: #eaf2fa;
+  --font-display-family: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-brand="daale"] {
+  --bg: #fffbf6;
+  --bg-soft: #f6f1fa;
+  --surface: #ffffff;
+  --surface-2: #faf6fc;
+  --ink: #221a2e;
+  --ink-muted: #5b5068;
+  --line: #e6deee;
+  --field-border: #857a94;
+  --primary: #6b2f86;
+  --primary-hover: #5a2573;
+  --on-primary: #ffffff;
+  --accent-1: #c42424;
+  --accent-2: #7e4296;
+  --accent-3: #0068a3;
+  --selected: #6b2f86;
+  --selected-bg: #f3ecf8;
+  --focus: #0068a3;
+  --error: #b3261e;
+  --moon: #eaf2fa;
+  --font-display-family: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-brand="noche-magik"] {
+  --bg: #0b1630;
+  --bg-soft: #101e3e;
+  --surface: #14254a;
+  --surface-2: #1b3160;
+  --ink: #f4f7fc;
+  --ink-muted: #c1cde3;
+  --line: #2a3e6a;
+  --field-border: #7890bd;
+  --primary: #9bd0f0;
+  --primary-hover: #b5ddf5;
+  --on-primary: #06142b;
+  --accent-1: #58a8d0;
+  --accent-2: #f2c14e;
+  --accent-3: #a99be0;
+  --selected: #f2c14e;
+  --selected-bg: #1f3566;
+  --focus: #f2c14e;
+  --error: #ffb4ab;
+  /* Superficie clara para el logo: su nombre azul no se lee sobre la noche. */
+  --moon: #eaf2fa;
+  --font-display-family: var(--font-young-serif), Georgia, serif;
+  color-scheme: dark;
+}
+
+/*
+ * Estilos base, en la capa base de Tailwind: las clases de los componentes
+ * (por ejemplo rounded-full) siempre les ganan.
+ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    /* Young Serif tiene un solo peso: nunca se le inventa una negrita. */
+    font-synthesis-weight: none;
+  }
+
+  /*
+   * Cada ruta de marca envuelve su contenido en [data-brand], hijo directo del
+   * body. El body toma ese fondo con :has(), así el rebote del scroll en iOS no
+   * muestra el color de otra marca, sin JavaScript. Solo cuentan los hijos
+   * directos: una tarjeta de marca dentro de la portada no pinta la página.
+   */
+  body:has(> [data-brand="daale"]) {
+    background: #fffbf6;
+  }
+
+  body:has(> [data-brand="noche-magik"]) {
+    background: #0b1630;
+    color-scheme: dark;
+  }
+
+  [data-brand="noche-magik"] {
+    line-height: 1.65;
+  }
+
+  /* El contorno sigue la forma de cada elemento: no se le fuerza un radio. */
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  /*
+   * Destinos del foco que no son controles (el contenido principal al que
+   * lleva «Saltar al contenido», una sección, el título de cada paso): reciben
+   * el foco para que el teclado siga desde ahí, sin dibujarles un marco.
+   */
+  [tabindex="-1"]:focus-visible {
+    outline: none;
+  }
+
+  /* Evita el zoom de iOS al enfocar campos: nunca menos de 16px. */
+  input,
+  select,
+  textarea {
+    font-size: max(1em, 16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

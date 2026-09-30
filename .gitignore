@@ -1,13 +1,21 @@
 node_modules
 dist
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
 .DS_Store
 *.crdownload
 
-# Material fuente pesado del cliente (400 MB): los modelos ya optimizados que
-# el sitio realmente usa están versionados en src/
+# Material pesado del cliente de la etapa 3D (400 MB); el sitio actual no lo usa.
+# El prototipo 3D quedó en la etiqueta git prototipo-3d-hero.
 lua 3d/
 RA/
 PACTO FINALE.wav
+
+# Imágenes ilustrativas generadas con ComfyUI (17 MB en PNG): se regeneran con
+# scripts/generar-imagenes.py y su versión optimizada está en public/media/.
+media-fuente/generadas/
 
 # Interno del negocio: Precios incluye alias de cobro, instrucciones son audios
 Precios/

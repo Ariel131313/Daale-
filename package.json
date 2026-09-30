@@ -1,23 +1,31 @@
 {
-  "name": "web",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "daale-noche-magik",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "node scripts/servir-out.mjs",
+    "servir": "node scripts/servir-out.mjs",
+    "lint": "eslint",
+    "imagenes": "node scripts/optimizar-imagenes.mjs",
+    "test": "tsx --test \"src/**/*.test.ts\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
   "dependencies": {
-    "three": "^0.186.0"
+    "next": "16.3.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@gltf-transform/cli": "^4.5.0",
-    "opentype.js": "^2.0.0",
-    "vite": "^8.3.0"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.15",
+    "typescript": "^5"
   }
 }

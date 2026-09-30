@@ -1,0 +1,357 @@
+{
+  "daale-alien": {
+    "src": "/media/daale-alien-265.webp",
+    "width": 265,
+    "height": 590,
+    "srcSet": [
+      {
+        "src": "/media/daale-alien-265.webp",
+        "width": 265
+      }
+    ]
+  },
+  "daale-criatura-azul": {
+    "src": "/media/daale-criatura-azul-520.webp",
+    "width": 520,
+    "height": 430,
+    "srcSet": [
+      {
+        "src": "/media/daale-criatura-azul-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-criatura-azul-520.webp",
+        "width": 520
+      }
+    ]
+  },
+  "daale-munecos": {
+    "src": "/media/daale-munecos-245.webp",
+    "width": 245,
+    "height": 312,
+    "srcSet": [
+      {
+        "src": "/media/daale-munecos-245.webp",
+        "width": 245
+      }
+    ]
+  },
+  "daale-personaje": {
+    "src": "/media/daale-personaje-650.webp",
+    "width": 650,
+    "height": 480,
+    "srcSet": [
+      {
+        "src": "/media/daale-personaje-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-personaje-650.webp",
+        "width": 650
+      }
+    ]
+  },
+  "nm-hombre-espejo": {
+    "src": "/media/nm-hombre-espejo-510.webp",
+    "width": 510,
+    "height": 1040,
+    "srcSet": [
+      {
+        "src": "/media/nm-hombre-espejo-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/nm-hombre-espejo-510.webp",
+        "width": 510
+      }
+    ]
+  },
+  "nm-mercenario": {
+    "src": "/media/nm-mercenario-600.webp",
+    "width": 600,
+    "height": 400,
+    "srcSet": [
+      {
+        "src": "/media/nm-mercenario-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/nm-mercenario-600.webp",
+        "width": 600
+      }
+    ]
+  },
+  "nm-personajes": {
+    "src": "/media/nm-personajes-190.webp",
+    "width": 190,
+    "height": 542,
+    "srcSet": [
+      {
+        "src": "/media/nm-personajes-190.webp",
+        "width": 190
+      }
+    ]
+  },
+  "nm-tematico": {
+    "src": "/media/nm-tematico-520.webp",
+    "width": 520,
+    "height": 250,
+    "srcSet": [
+      {
+        "src": "/media/nm-tematico-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/nm-tematico-520.webp",
+        "width": 520
+      }
+    ]
+  },
+  "daale-animacion": {
+    "src": "/media/daale-animacion-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/daale-animacion-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-animacion-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/daale-animacion-1152.webp",
+        "width": 1152
+      }
+    ]
+  },
+  "daale-cascada": {
+    "src": "/media/daale-cascada-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/daale-cascada-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-cascada-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/daale-cascada-1152.webp",
+        "width": 1152
+      }
+    ]
+  },
+  "daale-deco": {
+    "src": "/media/daale-deco-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/daale-deco-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-deco-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/daale-deco-1152.webp",
+        "width": 1152
+      }
+    ]
+  },
+  "daale-empresas": {
+    "src": "/media/daale-empresas-1344.webp",
+    "width": 1344,
+    "height": 768,
+    "srcSet": [
+      {
+        "src": "/media/daale-empresas-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-empresas-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/daale-empresas-1344.webp",
+        "width": 1344
+      }
+    ]
+  },
+  "daale-globoflexia": {
+    "src": "/media/daale-globoflexia-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/daale-globoflexia-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-globoflexia-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/daale-globoflexia-1152.webp",
+        "width": 1152
+      }
+    ]
+  },
+  "daale-hero": {
+    "src": "/media/daale-hero-1344.webp",
+    "width": 1344,
+    "height": 768,
+    "srcSet": [
+      {
+        "src": "/media/daale-hero-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-hero-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/daale-hero-1344.webp",
+        "width": 1344
+      }
+    ]
+  },
+  "daale-maquillaje": {
+    "src": "/media/daale-maquillaje-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/daale-maquillaje-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-maquillaje-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/daale-maquillaje-1152.webp",
+        "width": 1152
+      }
+    ]
+  },
+  "daale-titeres": {
+    "src": "/media/daale-titeres-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/daale-titeres-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/daale-titeres-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/daale-titeres-1152.webp",
+        "width": 1152
+      }
+    ]
+  },
+  "nm-ambientacion": {
+    "src": "/media/nm-ambientacion-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/nm-ambientacion-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/nm-ambientacion-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/nm-ambientacion-1152.webp",
+        "width": 1152
+      }
+    ]
+  },
+  "nm-hero": {
+    "src": "/media/nm-hero-1344.webp",
+    "width": 1344,
+    "height": 768,
+    "srcSet": [
+      {
+        "src": "/media/nm-hero-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/nm-hero-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/nm-hero-1344.webp",
+        "width": 1344
+      }
+    ]
+  },
+  "nm-performers": {
+    "src": "/media/nm-performers-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/nm-performers-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/nm-performers-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/nm-performers-1152.webp",
+        "width": 1152
+      }
+    ]
+  },
+  "nm-recepcion": {
+    "src": "/media/nm-recepcion-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/nm-recepcion-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/nm-recepcion-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/nm-recepcion-1152.webp",
+        "width": 1152
+      }
+    ]
+  },
+  "nm-zancudos": {
+    "src": "/media/nm-zancudos-1152.webp",
+    "width": 1152,
+    "height": 864,
+    "srcSet": [
+      {
+        "src": "/media/nm-zancudos-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/nm-zancudos-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/nm-zancudos-1152.webp",
+        "width": 1152
+      }
+    ]
+  }
+}

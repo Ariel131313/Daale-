@@ -1,0 +1,131 @@
+/*
+ * Portada neutral. El fondo va de la luz cálida de Daale (arriba a la
+ * izquierda) a un crepúsculo lavanda (abajo a la derecha): nunca llega a la
+ * noche, así la tarjeta de Noche Magik se apoya en un cielo que ya oscurece
+ * y no queda una pantalla partida en blanco y negro.
+ */
+.sky {
+  background-color: #f7f3f2;
+  background-image:
+    radial-gradient(ellipse 65% 45% at 0% 0%, rgb(255 223 196 / 0.6), transparent 72%),
+    radial-gradient(ellipse 70% 60% at 100% 78%, rgb(132 150 212 / 0.3), transparent 74%),
+    linear-gradient(to bottom right, #fcf8f3 0%, #f8f2f1 38%, #ece8f4 70%, #dfe4f2 100%);
+}
+
+/*
+ * Cada tarjeta lleva data-brand con su marca, así toma los tokens de
+ * globals.css (colores, foco, tipografía). Acá solo va su fondo.
+ */
+.daale {
+  background:
+    radial-gradient(90% 65% at 16% 0%, rgb(255 238 219 / 0.95), rgb(255 238 219 / 0) 72%),
+    #ffffff;
+  border: 1px solid #efe4dc;
+  box-shadow:
+    0 1px 2px rgb(74 44 30 / 0.05),
+    0 18px 40px -22px rgb(120 72 40 / 0.3);
+}
+
+.noche {
+  /* Luz de luna detrás del logo y un cielo que baja de crepúsculo a noche. */
+  background:
+    radial-gradient(60% 55% at 20% 16%, rgb(155 208 240 / 0.2), transparent 72%),
+    linear-gradient(180deg, #1f3163 0%, #142650 42%, #0b1630 100%);
+  border: 1px solid rgb(155 208 240 / 0.16);
+  box-shadow:
+    0 1px 2px rgb(11 22 48 / 0.2),
+    0 22px 44px -22px rgb(11 22 48 / 0.6);
+}
+
+/* La placa clara del logo de Noche Magik, con un halo suave de luna. */
+.moonPlate {
+  box-shadow:
+    0 0 0 6px rgb(234 242 250 / 0.07),
+    0 10px 40px rgb(155 208 240 / 0.3);
+}
+
+/* ---------- Movimiento: breve, decorativo y solo si la persona lo acepta. */
+
+.card {
+  transition:
+    translate 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 240ms ease;
+}
+
+.piece {
+  rotate: var(--r);
+  transition:
+    translate 420ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    rotate 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.star {
+  transition: scale 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    translate: 0 -10px;
+  }
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0;
+    scale: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .piece {
+    animation: settle 650ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+    animation-delay: calc(var(--d, 0ms) + 150ms);
+  }
+
+  .star {
+    animation: twinkle 700ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+    animation-delay: calc(var(--d, 0ms) + 150ms);
+  }
+
+  .card:has(a:focus-visible) {
+    translate: 0 -3px;
+  }
+
+  .card:has(a:focus-visible) .piece {
+    translate: var(--dx) var(--dy);
+    rotate: calc(var(--r) + var(--dr));
+  }
+
+  .card:has(a:focus-visible) .star {
+    scale: 1.25;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    translate: 0 -3px;
+  }
+
+  .daale:hover {
+    box-shadow:
+      0 1px 2px rgb(74 44 30 / 0.05),
+      0 24px 48px -22px rgb(120 72 40 / 0.36);
+  }
+
+  .noche:hover {
+    box-shadow:
+      0 1px 2px rgb(11 22 48 / 0.2),
+      0 28px 52px -22px rgb(11 22 48 / 0.7);
+  }
+
+  .card:hover .piece {
+    translate: var(--dx) var(--dy);
+    rotate: calc(var(--r) + var(--dr));
+  }
+
+  .card:hover .star {
+    scale: 1.25;
+  }
+}
