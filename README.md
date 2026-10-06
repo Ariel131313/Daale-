@@ -54,7 +54,7 @@ Todo lo que cambia el contenido vive en `src/config/`. Los componentes no tienen
 | Servicios, categorías, público y «pendiente de confirmar» | `src/config/services.ts` |
 | Tipos de evento y servicios exclusivos para mayores (aparte, ver [Público](#público-y-mayores-de-18)) | `src/config/adultos.ts` |
 | Personajes | `src/config/characters.ts` |
-| Sugerencias del paso 4 y cuándo aparecen | `src/config/recommendations.ts` |
+| Sugerencias del paso 4: reglas por tipo de evento (`recommendations.ts`) y combinaciones de cada servicio (`pairsWith` en `services.ts`) | `src/config/recommendations.ts` y `src/config/services.ts` |
 | Preguntas frecuentes | `src/config/faq.ts` |
 | Rangos de presupuesto orientativo | `src/config/budgets.ts` |
 | Fotos, textos alternativos y permisos | `src/config/media.ts` |
@@ -64,7 +64,7 @@ Todo lo que cambia el contenido vive en `src/config/`. Los componentes no tienen
 
 Lo que la marca todavía no confirmó se marca siempre:
 
-- Los servicios y personajes con `pendingConfirmation: true` aparecen con la etiqueta «Pendiente de confirmar». Si apagás `showPendingServices`, dejan de ofrecerse en listados, tarjetas y sugerencias.
+- Los servicios y personajes con `pendingConfirmation: true` aparecen con la etiqueta «Pendiente de confirmar». Si apagás `showPendingServices`, dejan de ofrecerse en listados, tarjetas y sugerencias. El 30/09/2026 el cliente confirmó todos los servicios del catálogo, así que hoy no hay ninguno pendiente a la vista; el mecanismo queda para lo que se sume más adelante.
 - Las preguntas frecuentes con `pendingPolicy: true` tienen respuestas neutrales que invitan a consultar. Mientras `showReviewBadges` esté encendido, llevan la etiqueta «Respuesta provisoria».
 
 Todos los precios están en `null`, y `showPrices` sigue apagado.
@@ -78,7 +78,7 @@ Cada marca tiene su número, y el configurador de una nunca escribe al de la otr
 | Daale | `NEXT_PUBLIC_WHATSAPP_DAALE` | `5492644398407` (264 439-8407) |
 | Noche Magik | `NEXT_PUBLIC_WHATSAPP_NOCHE_MAGIK` | `5492646269681` (264 626-9681) |
 
-El número va con código de país y sin `+`, espacios ni guiones: `549` + característica + número. Si falta o está mal escrito, el sitio no enlaza a ningún chat: muestra «WhatsApp sin configurar» y deja copiar el mensaje. Los valores por defecto están en `src/config/brands.ts`; las variables de entorno los reemplazan al construir.
+Los dos números los confirmó el cliente. El número va con código de país y sin `+`, espacios ni guiones: `549` + característica + número. Si falta o está mal escrito, el sitio no enlaza a ningún chat: muestra «WhatsApp sin configurar» y deja copiar el mensaje. Los valores por defecto están en `src/config/brands.ts`; las variables de entorno los reemplazan al construir.
 
 Hay dos formas de escribir:
 
@@ -100,7 +100,7 @@ El nombre del logo de Noche Magik es azul oscuro y no se lee sobre la noche. Por
 
 | Carpeta | Contenido |
 |---|---|
-| `media-fuente/reales/` | Recortes de fotos reales: solo artistas con máscara o disfraz, sin chicos, invitados ni logos de terceros. Al hombre espejo se le tapó el cartel del local, y el mercenario quedó a medio cuerpo, sin los globos estampados con la máscara ni los regalos. |
+| `media-fuente/reales/` | Recortes de fotos reales: solo artistas con máscara o disfraz, sin chicos, invitados ni logos de terceros. Al hombre espejo se le tapó el cartel del local, y el mercenario quedó a medio cuerpo, sin los globos estampados con la máscara ni los regalos. La ilustración del chocolatero se amplió y se reencuadró en 3:2 sobre un fondo en el mismo estilo (`scripts/recomponer-chocolatero.py`). |
 | `media-fuente/generadas/` | Imágenes ilustrativas hechas con ComfyUI. No se versionan en git porque se regeneran. |
 | `public/media/` | Versiones WebP en 480, 960 y 1440 px que usa el sitio. |
 | `src/config/mediaSizes.json` | Medidas de cada imagen. Lo escribe `npm run imagenes`. |
@@ -138,7 +138,7 @@ Tiene hasta cinco pasos visibles y un resumen, con «Paso X de Y»:
 1. Tipo de evento.
 2. Qué sumar, con la opción de contar la idea con palabras propias.
 3. Fecha y lugar. La fecha puede ser tentativa o quedar sin definir. En empresas se pide empresa y objetivo. De los chicos solo se pide cuántos son y un rango de edad, nunca datos personales.
-4. Sugerencias. Solo aparece si hay algo pertinente, o si ya se sumó alguna (así siempre se puede sacar), y nunca promete disponibilidad.
+4. Sugerencias («Personajes que suman» en Noche Magik, «Ideas que suman» en Daale). Cambian según lo que se elige: primero va lo que combina con lo último que se marcó y después lo que sugieren las reglas del tipo de evento, con un máximo de cuatro. Solo aparece si hay algo para sugerir, o si ya se sumó alguna (así siempre se puede sacar), y nunca promete disponibilidad.
 5. Nombre, que es obligatorio, y presupuesto orientativo opcional, con «Prefiero conversarlo».
 
 Las respuestas se guardan en el navegador, por marca, durante 14 días, y se pueden borrar con «Borrar respuestas y empezar de nuevo». Recargar o usar el botón Atrás no hace perder nada.
@@ -188,8 +188,6 @@ Con dominio propio:
 
 ## Antes de abrirlo al público
 
-- [ ] Confirmar los dos números de WhatsApp.
-- [ ] Confirmar o sacar los servicios «Pendiente de confirmar», o apagar `showPendingServices`.
 - [ ] Apagar `showReviewBadges`.
 - [ ] Reemplazar las imágenes ilustrativas por fotos reales, o apagar `showIllustrativeMedia`.
 - [ ] Completar o quitar las respuestas provisorias de las preguntas frecuentes.
@@ -220,11 +218,9 @@ Con dominio propio:
 
 | Qué falta | Estado |
 |---|---|
-| Números de WhatsApp | Cargados los que pasó el cliente. El 264 626-9681 figura en el tríptico como de «Pastas de dientes Glister»: confirmar que es el de Noche Magik. |
-| Catálogo de Noche Magik | Categorías armadas. Pendientes: ambientación nocturna, producción especial y el show para público adulto. |
-| Servicios de Daale por confirmar | Mimo, zancudo, rincón de fotos, intervención temática y producción personalizada. |
+| Show para público adulto | Es el único servicio que sigue «pendiente de confirmar»: está oculto junto con toda la sección para mayores. Definir qué se ofrece antes de encenderla. |
 | Precios | No se muestran. Los rangos de presupuesto son orientativos y hay que validarlos. |
-| Autorizaciones audiovisuales | Permiso de los artistas que aparecen en los 7 recortes reales, aunque estén disfrazados. Fotos reales para reemplazar las 13 ilustrativas hechas con ComfyUI (hero y servicios de las dos marcas, empresas y ambientación). Origen de la ilustración del chocolatero («WILLY WONCA.jpeg»): parece hecha con IA a partir de una foto de un evento, así que se muestra como ilustrativa, recortada al personaje. |
+| Fotos reales | El cliente las va a ir cargando de a poco. Faltan para reemplazar las 13 ilustrativas hechas con ComfyUI (hero y servicios de las dos marcas, empresas y ambientación) y la ilustración del chocolatero, que parece hecha con IA a partir de una foto de un evento. También hace falta el permiso de los artistas de los 7 recortes reales, aunque estén disfrazados. |
 | Políticas comerciales | Anticipación para reservar, duración, zonas y forma de reserva y pago. Hoy son respuestas provisorias en las preguntas frecuentes de las dos marcas. |
 | Textos legales | Aviso de privacidad (analítica, WhatsApp) y términos. Revisión legal de la sección 18+ antes de encenderla. |
 | Dominio | Pendiente. Mientras tanto se publica en GitHub Pages. |

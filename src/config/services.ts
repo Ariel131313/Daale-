@@ -1,9 +1,10 @@
 import type { Service } from "@/lib/types";
 
 /**
- * Catálogo por marca. pendingConfirmation marca lo que no aparece en ningún
- * material de la marca (tríptico, propuestas comerciales, mensajes a clientes)
- * y hay que validar antes de publicar.
+ * Catálogo por marca. pendingConfirmation marca lo que la marca todavía no
+ * confirmó: se ofrece con la etiqueta «Pendiente de confirmar». El 30/09/2026
+ * el cliente confirmó todos los servicios de este catálogo, que ya están en
+ * funcionamiento.
  *
  * Lo exclusivo para mayores no está acá: vive en adultos.ts y solo lo carga
  * la ruta /noche-magik/mayores (ver catalog.ts). Las reglas de público viven
@@ -101,7 +102,7 @@ export const services: Service[] = [
     pairsWith: ["daale-recepcion"],
     commercialPriority: 12,
     price: null,
-    pendingConfirmation: true,
+    pendingConfirmation: false,
   },
   {
     id: "daale-zancudo",
@@ -115,7 +116,7 @@ export const services: Service[] = [
     pairsWith: ["daale-recepcion"],
     commercialPriority: 13,
     price: null,
-    pendingConfirmation: true,
+    pendingConfirmation: false,
   },
 
   // ---------- Daale · Estética y juegos ----------
@@ -264,7 +265,7 @@ export const services: Service[] = [
     pairsWith: ["daale-personajes", "daale-deco"],
     commercialPriority: 16,
     price: null,
-    pendingConfirmation: true,
+    pendingConfirmation: false,
   },
   {
     id: "daale-desayuno",
@@ -298,7 +299,7 @@ export const services: Service[] = [
     pairsWith: ["daale-recepcion", "daale-sector-creativo"],
     commercialPriority: 18,
     price: null,
-    pendingConfirmation: true,
+    pendingConfirmation: false,
     clientTypes: ["empresa"],
   },
   {
@@ -329,7 +330,7 @@ export const services: Service[] = [
     pairsWith: [],
     commercialPriority: 20,
     price: null,
-    pendingConfirmation: true,
+    pendingConfirmation: false,
     clientTypes: ["empresa"],
   },
 
@@ -492,7 +493,7 @@ export const services: Service[] = [
     pairsWith: ["nm-show-tematico"],
     commercialPriority: 10,
     price: null,
-    pendingConfirmation: true,
+    pendingConfirmation: false,
   },
   {
     id: "nm-produccion",
@@ -506,6 +507,6 @@ export const services: Service[] = [
     pairsWith: [],
     commercialPriority: 11,
     price: null,
-    pendingConfirmation: true,
+    pendingConfirmation: false,
   },
 ];

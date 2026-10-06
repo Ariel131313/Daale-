@@ -2,9 +2,9 @@ import type { BrandConfig, BrandId } from "@/lib/types";
 
 /**
  * Números de WhatsApp en formato internacional (54 9 + característica + número).
- * Los informó el cliente; confirmarlos antes de publicar. Se pueden reemplazar
- * por variables de entorno sin tocar código. Si quedan en null, el sitio
- * muestra el mensaje armado pero no abre ningún chat.
+ * Los informó y confirmó el cliente (el de Noche Magik termina en 9681). Se
+ * pueden reemplazar por variables de entorno sin tocar código. Si quedan en
+ * null, el sitio muestra el mensaje armado pero no abre ningún chat.
  */
 const whatsappDaale = process.env.NEXT_PUBLIC_WHATSAPP_DAALE ?? "5492644398407";
 const whatsappNocheMagik =

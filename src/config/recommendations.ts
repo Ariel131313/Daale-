@@ -1,9 +1,11 @@
 import type { Recommendation } from "@/lib/types";
 
 /**
- * Sugerencias opcionales del paso 4. Hablan de "evaluar" y "sumar", nunca de
- * disponibilidad garantizada ni de cantidades fijas de personal: esas reglas
- * las tiene que validar cada marca. El filtro de público de lib/audience.ts se
+ * Reglas de sugerencias del paso 4, por tipo de evento y cantidades. Se suman
+ * a las combinaciones de cada servicio (pairsWith en services.ts), que van
+ * primero porque dependen de lo que eligió la persona. Hablan con decisión de
+ * por qué suma cada cosa, pero nunca de disponibilidad garantizada ni de
+ * cantidades fijas de personal. El filtro de público de lib/audience.ts se
  * aplica encima, así que ninguna sugerencia puede colar un servicio adulto.
  */
 export const recommendations: Recommendation[] = [
@@ -13,7 +15,7 @@ export const recommendations: Recommendation[] = [
     brand: "daale",
     suggestServiceId: "daale-animacion",
     reason:
-      "Con muchos chicos, conviene evaluar sumar animación para que todos participen.",
+      "Con muchos chicos, la animación hace que todos participen.",
     when: { minChildren: 20 },
   },
   {
@@ -38,7 +40,7 @@ export const recommendations: Recommendation[] = [
     id: "daale-infantil-globoflexia",
     brand: "daale",
     suggestServiceId: "daale-globoflexia",
-    reason: "La globoflexia funciona muy bien como regalo para llevarse a casa.",
+    reason: "La globoflexia es el regalo que cada chico se lleva a casa.",
     when: { eventTypeIds: ["daale-cumple-infantil", "daale-familiar"] },
   },
   {
@@ -98,7 +100,7 @@ export const recommendations: Recommendation[] = [
     id: "nm-muchos-animacion",
     brand: "noche-magik",
     suggestServiceId: "nm-animacion",
-    reason: "Con muchos invitados, conviene evaluar animación para sostener la fiesta.",
+    reason: "Con muchos invitados, la animación sostiene la fiesta toda la noche.",
     when: { minAttendees: 120 },
   },
 ];

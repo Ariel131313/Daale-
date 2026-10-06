@@ -26,6 +26,7 @@ import {
   isCharacterAllowed,
   isEventTypeAllowed,
   isServiceAllowed,
+  MAX_SUGGESTIONS,
   recommendationsFor,
   sanitizeAnswers,
   servicesFor,
@@ -1052,11 +1053,71 @@ describe("las sugerencias hablan del evento elegido", () => {
       FLAG_OFF
     ).map((r) => r.service.id);
 
-  test("el maquillaje para «los chicos» solo aparece en celebraciones con chicos", () => {
-    assert.ok(suggestedIds("daale-cumple-infantil", ["daale-personajes"]).includes("daale-maquillaje"));
-    assert.ok(suggestedIds("daale-familiar", ["daale-personajes"]).includes("daale-maquillaje"));
+  test("ninguna sugerencia habla de «los chicos» en un evento sin chicos", () => {
+    const reasons = (eventTypeId: string, serviceIds: string[]) =>
+      recommendationsFor("daale", { ...emptyAnswers(), eventTypeId, serviceIds }, "general", FLAG_OFF).map(
+        (r) => r.recommendation.reason
+      );
+    assert.ok(
+      reasons("daale-cumple-infantil", ["daale-personajes"]).some((r) => /chicos/.test(r)),
+      "en un cumpleaños infantil sí"
+    );
     for (const id of ["daale-cumple-adultos", "daale-corporativo", "daale-marca", "daale-shopping"]) {
-      assert.ok(!suggestedIds(id, ["daale-personajes"]).includes("daale-maquillaje"), id);
+      for (const chosen of [["daale-personajes"], ["daale-animacion"], ["daale-personajes", "daale-deco"]]) {
+        for (const r of reasons(id, chosen)) {
+          assert.doesNotMatch(r, /\bchic/i, `${id} con ${chosen.join(", ")}: «${r}»`);
+        }
+      }
+    }
+  });
+
+  test("las sugerencias cambian según lo que se elige: primero lo que combina con lo último", () => {
+    const first = (serviceIds: string[]) => suggestedIds("daale-cumple-infantil", serviceIds)[0];
+    const afterDeco = suggestedIds("daale-cumple-infantil", ["daale-deco"]);
+    const afterMaquillaje = suggestedIds("daale-cumple-infantil", ["daale-maquillaje"]);
+    assert.notDeepEqual(afterDeco, afterMaquillaje);
+    assert.ok(afterDeco.includes("daale-cotillon"), "la deco combina con el cotillón");
+    assert.ok(afterMaquillaje.includes("daale-glitter"), "el maquillaje combina con el glitter");
+    // Lo último que se marcó manda el orden.
+    assert.equal(first(["daale-maquillaje", "daale-deco"]), "daale-cotillon");
+    assert.equal(first(["daale-deco", "daale-maquillaje"]), "daale-glitter");
+  });
+
+  test("una sugerencia por combinación dice con qué combina; si hay regla, usa su explicación", () => {
+    const recs = recommendationsFor(
+      "noche-magik",
+      { ...emptyAnswers(), eventTypeId: "nm-show", serviceIds: ["nm-hombre-espejo"] },
+      "general",
+      FLAG_OFF
+    );
+    const performers = recs.find((r) => r.service.id === "nm-performers");
+    assert.ok(performers);
+    assert.equal(performers.recommendation.reason, "Combina con «Hombre espejo», que ya elegiste.");
+
+    const withRule = recommendationsFor(
+      "noche-magik",
+      { ...emptyAnswers(), eventTypeId: "nm-15", serviceIds: ["nm-recepcion"] },
+      "general",
+      FLAG_OFF
+    ).find((r) => r.service.id === "nm-zancudos");
+    assert.ok(withRule);
+    assert.equal(withRule.recommendation.id, "nm-recepcion-zancudos", "la regla explica mejor por qué");
+  });
+
+  test(`nunca más de ${MAX_SUGGESTIONS} sugerencias, ni algo ya elegido o de otra marca`, () => {
+    for (const brand of BRANDS) {
+      for (const et of eventTypesFor(brand, "general", FLAG_OFF)) {
+        const all = servicesFor(brand, et, "general", FLAG_OFF).map((s) => s.id);
+        for (const serviceIds of [[], all.slice(0, 1), all.slice(0, 3), all.slice(-2)]) {
+          const recs = recommendationsFor(brand, { ...emptyAnswers(), eventTypeId: et.id, serviceIds }, "general", FLAG_OFF);
+          assert.ok(recs.length <= MAX_SUGGESTIONS, `${et.id}: ${recs.length}`);
+          for (const r of recs) {
+            assert.equal(r.service.brand, brand);
+            assert.ok(!serviceIds.includes(r.service.id), `${et.id}: sugiere ${r.service.id}, ya elegido`);
+          }
+          assert.equal(new Set(recs.map((r) => r.service.id)).size, recs.length, "sin repetidos");
+        }
+      }
     }
   });
 

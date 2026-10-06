@@ -86,10 +86,12 @@ export function stepCopy(
           "Solo necesitamos saber si ya tenés fecha. Lo demás es opcional y nos ayuda a armar la propuesta.",
       };
     case "sugerencias":
+      // En Noche Magik lo que se sugiere son artistas y personajes; en Daale,
+      // también estética y deco.
       return {
-        title: "Algunas ideas que suelen sumar",
+        title: eventType?.brand === "noche-magik" ? "Personajes que suman" : "Ideas que suman",
         intro:
-          "Son opcionales. Si alguna te interesa, la agregamos a tu consulta y la conversamos por WhatsApp.",
+          "Las elegimos según lo que ya sumaste. Son opcionales: si alguna te gusta, marcala y la sumamos a tu consulta.",
       };
     case "confirmar":
       return {

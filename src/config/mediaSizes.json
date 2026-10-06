@@ -82,13 +82,25 @@
     ]
   },
   "nm-personajes": {
-    "src": "/media/nm-personajes-190.webp",
-    "width": 190,
-    "height": 542,
+    "src": "/media/nm-personajes-1500.webp",
+    "width": 1500,
+    "height": 1000,
     "srcSet": [
       {
-        "src": "/media/nm-personajes-190.webp",
-        "width": 190
+        "src": "/media/nm-personajes-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/media/nm-personajes-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/media/nm-personajes-1440.webp",
+        "width": 1440
+      },
+      {
+        "src": "/media/nm-personajes-1500.webp",
+        "width": 1500
       }
     ]
   },

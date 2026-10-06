@@ -264,9 +264,10 @@ describe("stepsFor", () => {
   test("saltea «sugerencias» cuando no aplica", () => {
     const cases: [BrandId, Partial<ConfiguratorAnswers>][] = [
       ["daale", { eventTypeId: "daale-cumple-adultos" }],
-      ["daale", { eventTypeId: "daale-cumple-adultos", serviceIds: ["daale-animacion"] }],
+      // Servicios sin combinaciones en el catálogo y sin reglas para el evento.
+      ["daale", { eventTypeId: "daale-cumple-adultos", serviceIds: ["daale-desayuno"] }],
       ["noche-magik", { eventTypeId: "nm-casamiento" }],
-      ["noche-magik", { eventTypeId: "nm-show", serviceIds: ["nm-hombre-espejo"] }],
+      ["noche-magik", { eventTypeId: "nm-show", serviceIds: ["nm-pasacalle"] }],
     ];
     for (const [brand, answers] of cases) {
       assert.deepEqual(
@@ -295,9 +296,10 @@ describe("stepsFor", () => {
   });
 
   test("si ya eligió todo lo que se le sugeriría, el paso desaparece", () => {
+    // Todo lo que sugieren las reglas de un 15 y todo lo que combina con eso.
     const state = withAnswers("noche-magik", {
       eventTypeId: "nm-15",
-      serviceIds: ["nm-recepcion", "nm-personajes", "nm-zancudos"],
+      serviceIds: ["nm-recepcion", "nm-personajes", "nm-zancudos", "nm-mimos", "nm-animacion", "nm-performers"],
     });
     assert.ok(!stepsFor(state).includes("sugerencias"));
   });
@@ -928,8 +930,9 @@ describe("sugerencias sumadas que dejan de aplicar", () => {
       toggleExtra("daale-fotos"),
     ]);
     assert.deepEqual(s.answers.extraServiceIds, ["daale-fotos"]);
-    // Cambia lo elegido: la sugerencia del rincón de fotos ya no aplica.
-    s = run(s, [toggleService("daale-personajes"), toggleService("daale-animacion")]);
+    // Cambia lo elegido: la sugerencia del rincón de fotos ya no aplica (el
+    // desayuno no tiene combinaciones ni reglas en un cumpleaños de adultos).
+    s = run(s, [toggleService("daale-personajes"), toggleService("daale-desayuno")]);
     assert.deepEqual(s.answers.extraServiceIds, ["daale-fotos"]);
     assert.ok(stepsFor(s).includes("sugerencias"), "sin el paso no habría dónde sacarla");
 
@@ -944,7 +947,7 @@ describe("sugerencias sumadas que dejan de aplicar", () => {
       toggleService("daale-personajes"),
       toggleExtra("daale-fotos"),
       toggleService("daale-personajes"),
-      toggleService("daale-animacion"),
+      toggleService("daale-desayuno"),
       goTo("sugerencias"),
     ]);
     s = run(s, [toggleExtra("daale-fotos")]);
@@ -962,7 +965,7 @@ describe("sugerencias sumadas que dejan de aplicar", () => {
     const stored: ConfiguratorState = {
       ...start("daale"),
       view: "sugerencias",
-      answers: { ...emptyAnswers(), eventTypeId: "daale-cumple-adultos", serviceIds: ["daale-animacion"] },
+      answers: { ...emptyAnswers(), eventTypeId: "daale-cumple-adultos", serviceIds: ["daale-desayuno"] },
     };
     const s = reducer(start("daale"), { type: "hydrate", state: stored });
     assert.notEqual(s.view, "sugerencias");

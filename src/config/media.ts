@@ -67,14 +67,14 @@ const meta: Record<MediaId, Meta> = {
     sourceNote: "FOTOS NOCHE MAGIC/35634049….jpg, sin la artista maquillada ni el farol con logo",
   },
   "nm-personajes": {
-    alt: "Ilustración de un chocolatero excéntrico de galera y anteojos redondos",
+    alt: "Ilustración estilo papel recortado de un chocolatero de galera verde, anteojos redondos y saco marrón, con un bastón de caramelo",
     // No es una foto: es una ilustración que parece hecha con IA a partir de una
     // foto de un evento. Se muestra como ilustrativa hasta tener una foto real.
     generated: true,
     identifiablePeople: false,
     authorized: false,
     sourceNote:
-      "FOTOS NOCHE MAGIC/WILLY WONCA.jpeg, panel ilustrado recortado al personaje (sin las invitadas). Confirmar su origen y reemplazar por una foto del artista",
+      "FOTOS NOCHE MAGIC/WILLY WONCA.jpeg, panel ilustrado: el personaje solo, ampliado 2,2× y reencuadrado en 3:2 sobre un fondo recompuesto (scripts/recomponer-chocolatero.py). Reemplazar por una foto del artista",
   },
 
   // ---------- Generadas con IA (reemplazar) ----------

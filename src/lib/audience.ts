@@ -193,11 +193,19 @@ export interface ApplicableRecommendation {
   service: Service;
 }
 
+/** Pocas y bien elegidas: el paso de sugerencias no es otro catálogo. */
+export const MAX_SUGGESTIONS = 4;
+
 /**
- * Sugerencias que aplican a las respuestas actuales. Se descartan las de
- * servicios que ya están elegidos y, sobre todo, las de servicios que el
- * público del evento no admite: una fiesta de 15 nunca recibe una sugerencia
- * para adultos, aunque alguien cargue mal una regla.
+ * Sugerencias para las respuestas actuales. No son siempre las mismas: primero
+ * va lo que combina con lo último que eligió la persona (pairsWith del
+ * catálogo), y después lo que sugieren las reglas por tipo de evento y
+ * cantidades. Si una regla habla del mismo servicio, se usa su explicación,
+ * que es más específica.
+ *
+ * Se descarta lo ya elegido y, sobre todo, lo que el público del evento no
+ * admite: una fiesta de 15 nunca recibe una sugerencia para adultos, aunque
+ * alguien cargue mal una regla o una combinación.
  */
 export function recommendationsFor(
   brand: BrandId,
@@ -206,21 +214,50 @@ export function recommendationsFor(
   flags: AudienceFlags = defaultFlags
 ): ApplicableRecommendation[] {
   const eventType = getEventType(answers.eventTypeId);
-  const seen = new Set<string>();
-  const result: ApplicableRecommendation[] = [];
+  const findService = (id: string) => allServices().find((s) => s.id === id);
+  const usable = (service: Service | undefined): service is Service =>
+    Boolean(
+      service &&
+        service.brand === brand &&
+        !answers.serviceIds.includes(service.id) &&
+        isServiceAllowed(service, eventType, mode, flags)
+    );
 
+  const byRule = new Map<string, Recommendation>();
   for (const rec of recommendations) {
-    if (rec.brand !== brand) continue;
-    if (seen.has(rec.suggestServiceId)) continue;
-    if (answers.serviceIds.includes(rec.suggestServiceId)) continue;
-    const service = allServices().find((s) => s.id === rec.suggestServiceId);
-    if (!service) continue;
-    if (!isServiceAllowed(service, eventType, mode, flags)) continue;
-    if (!conditionMatches(rec, answers, eventType)) continue;
-    seen.add(rec.suggestServiceId);
-    result.push({ recommendation: rec, service });
+    if (rec.brand !== brand || byRule.has(rec.suggestServiceId)) continue;
+    if (conditionMatches(rec, answers, eventType)) byRule.set(rec.suggestServiceId, rec);
   }
-  return result;
+
+  const result: ApplicableRecommendation[] = [];
+  const offer = (service: Service | undefined, fallback: () => Recommendation) => {
+    if (!usable(service) || result.some((r) => r.service.id === service.id)) return;
+    result.push({ recommendation: byRule.get(service.id) ?? fallback(), service });
+  };
+
+  // 1) Lo que combina con lo elegido, empezando por lo último que se marcó.
+  for (const chosenId of [...answers.serviceIds].reverse()) {
+    const chosen = findService(chosenId);
+    if (!chosen || !isServiceAllowed(chosen, eventType, mode, flags)) continue;
+    for (const pairId of chosen.pairsWith) {
+      offer(findService(pairId), () => ({
+        id: `combina-${chosen.id}-${pairId}`,
+        brand,
+        suggestServiceId: pairId,
+        // Sin la descripción del servicio: puede hablar de un público que no es
+        // el de este evento (por ejemplo, de chicos en un cumpleaños de adultos).
+        reason: `Combina con «${chosen.name}», que ya elegiste.`,
+        when: {},
+      }));
+    }
+  }
+
+  // 2) Las reglas por tipo de evento y cantidades.
+  for (const [serviceId, rec] of byRule) {
+    offer(findService(serviceId), () => rec);
+  }
+
+  return result.slice(0, MAX_SUGGESTIONS);
 }
 
 /**

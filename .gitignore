@@ -6,6 +6,7 @@ next-env.d.ts
 *.tsbuildinfo
 .DS_Store
 *.crdownload
+__pycache__/
 
 # Material pesado del cliente de la etapa 3D (400 MB); el sitio actual no lo usa.
 # El prototipo 3D quedó en la etiqueta git prototipo-3d-hero.
